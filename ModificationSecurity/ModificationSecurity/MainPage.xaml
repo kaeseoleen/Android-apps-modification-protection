@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ModificationSecurity"
+             x:Class="ModificationSecurity.MainPage"
+             Title="MainPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Баллы:" />
+            <Label x:Name="ScoreText" Text="NNN" />
+            <Button Text="Получить баллы" Clicked="AddScoreButton_Click"></Button>
+            <Button Text="Выход" Clicked="ExitAppButton_Click"></Button>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,13 @@
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.csprojAssemblyReference.cache
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.csproj.CoreCompileInputs.cache
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.AssemblyInfoInputs.cache
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.AssemblyInfo.cs
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.dll
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\ModificationSecurity.pdb
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\bin\Debug\netstandard2.0\ModificationSecurity.deps.json
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\bin\Debug\netstandard2.0\ModificationSecurity.dll
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\bin\Debug\netstandard2.0\ModificationSecurity.pdb
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\obj\Debug\netstandard2.0\AdsPage.xaml.g.cs
