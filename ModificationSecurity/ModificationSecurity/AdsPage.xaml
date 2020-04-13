@@ -8,7 +8,7 @@
                    FontSize="25"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="Получить" Clicked="AdEndedButton_Click"></Button>
+            <Button Text="Получить баллы" Clicked="AdEndedButton_Click"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

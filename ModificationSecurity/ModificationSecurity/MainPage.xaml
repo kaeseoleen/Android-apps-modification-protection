@@ -7,9 +7,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Баллы:" />
-            <Label x:Name="ScoreText" Text="NNN" />
+            <Label x:Name="ScoreText"/>
             <Button Text="Получить баллы" Clicked="AddScoreButton_Click"></Button>
-            <Button Text="Выход" Clicked="ExitAppButton_Click"></Button>            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
