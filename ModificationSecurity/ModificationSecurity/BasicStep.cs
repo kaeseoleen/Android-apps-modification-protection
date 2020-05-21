@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ModificationSecurity
 {
     struct BasicStep
     {
-        uint N1, N2, X;
+        uint L, R, K;
         public BasicStep(ulong dateFragment, uint keyFragment)
         {
-            N1 = (uint)(dateFragment >> 32);
-            N2 = (uint)((dateFragment << 32) >> 32);
-            X = keyFragment;
+            L = (uint)(dateFragment >> 32);
+            R = (uint)((dateFragment << 32) >> 32);
+            K = keyFragment;
         }
         public ulong BasicEncrypt(bool IsLastStep)
         {
-            return (FourthAndFifthStep(IsLastStep, ThirdStep(SecondStep(FirstStep()))));
+            return (LastSteps(IsLastStep, Shifting(Replacement(FirstStep()))));
         }
         private uint FirstStep()
         {
-            return (uint)((X + N1) % (Convert.ToUInt64(Math.Pow(2, 32))));
+            return (uint)((K + L) % (Convert.ToUInt64(Math.Pow(2, 32))));
         }
-
-        private uint SecondStep(uint S)
+        //Подстановка блоков
+        private uint Replacement(uint S)
         {
             uint newS, S0, S1, S2, S3, S4, S5, S6, S7;
 
@@ -49,27 +46,26 @@ namespace ModificationSecurity
 
             return newS;
         }
-
-        private uint ThirdStep(uint S)
+        //Сдвиг
+        private uint Shifting(uint S)
         {
             return (uint)(S << 11) | (S >> 21);
         }
-
-        private ulong FourthAndFifthStep(bool IsLastStep, uint S)
+        private ulong LastSteps(bool IsLastStep, uint S)
         {
             ulong N;
 
-            S = (S ^ N2);
+            S = (S ^ R);
 
             if (!IsLastStep)
             {
-                N2 = N1;
-                N1 = S;
+                R = L;
+                L = S;
             }
             else
-                N2 = S;
+                R = S;
 
-            N = ((ulong)N2) | (((ulong)N1) << 32);
+            N = ((ulong)R) | (((ulong)L) << 32);
 
             return N;
         }

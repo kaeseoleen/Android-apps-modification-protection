@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using Xamarin.Forms;
 
 namespace ModificationSecurity
@@ -17,13 +16,15 @@ namespace ModificationSecurity
         private async void AddScoreButton_Click(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AdsPage());
-            //Add score with XOR
+            //Добавление баллов 
             string temp = mainActivity.Get_trueScore();
-            tempScore = int.Parse(xor.Decode(temp));
+            //XOR-Дешифрование 
+            tempScore = int.Parse(xor.DecryptXOR(temp));
             tempScore += 1;
-            mainActivity.Update_trueScore(xor.Encode(tempScore.ToString())); 
+            //XOR-шифрование
+            mainActivity.Update_trueScore(xor.EncryptXOR(tempScore.ToString())); 
             ScoreText.Text = tempScore.ToString();
             tempScore = 0;
-        }
+        }   
     }
 }

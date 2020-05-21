@@ -1,62 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using SQLite;
+using Xamarin.Essentials;
 
 namespace ModificationSecurity
 {
     class MainActivity
     {
         XOR xor = new XOR();
-
-        [Table("ScoreTable")]
-        public class ScoreTable
-        {
-            [PrimaryKey, AutoIncrement, Column("_id")]
-            public int Id { get; set; }
-            [MaxLength(8)]
-            public byte[] dbValue { get; set; }
-        }
-
-        public void SQLite_Activity(string state)
-        {
-            string databaseFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "mobSec.db3");
-            SQLiteConnection Database = new SQLiteConnection(databaseFileName);
-            Database.CreateTable<ScoreTable>();            
-            switch (state)
-            {
-                case "open_app":                    
-                    try
-                    {
-                        //read                        
-                        byte[] temp = Database.Get<ScoreTable>(1).dbValue;
-                        //gost decrypt
-                        trueScore = Encoding.Default.GetString(temp);
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        trueScore = "0";
-                    }                   
-                    //XOR encode
-                    trueScore = xor.Encode(trueScore);
-                    break;
-
-                case "close_app":
-                    //XOR decode
-                    trueScore = xor.Decode(trueScore);
-                    //gost encrypt
-                    trueScore = Encoding.Default.GetString(Gost_Encrypt(trueScore));
-                    //delete old
-                    Database.Delete<ScoreTable>(1);
-                    //insert new
-                    ScoreTable table = new ScoreTable();
-                    table.dbValue = Encoding.Default.GetBytes(trueScore);
-                    Database.Insert(table);
-                    break;
-            }
-        }
-
+        //Строка для хранения защищаемого значения
         private static string trueScore;
         public string Get_trueScore()
         {
@@ -66,32 +17,64 @@ namespace ModificationSecurity
         {
             trueScore = value;
         }
-
-
-
-        //GOST
-        byte[] byteKey = Encoding.Default.GetBytes("TextTextTextTextTextTextTextText");
-        private byte[] encrByteFile, decrByteFile;
-        public byte[] Gost_Encrypt(string value)
+        //Работа с локальным хранилищем
+        public void Data_Activity(string state)
         {
-            if (byteKey != null)
+            switch (state)
+            {
+                case "open_app":                    
+                    if (Preferences.ContainsKey("score"))
+                    {
+                        //Извлечение данных
+                        string ClosedText = Preferences.Get("score", string.Empty);
+                        //Магма-дешифрование
+                        trueScore = Convert.ToBase64String(Magma_Decrypt(Convert.FromBase64String(ClosedText)));
+                    }     
+                    else
+                    {
+                        trueScore = "0";
+                    }
+                    //XOR-шифрование
+                    trueScore = xor.EncryptXOR(trueScore);
+                    break;
+
+                case "close_app":
+                    //XOR-дешифрование
+                    trueScore = xor.DecryptXOR(trueScore);
+                    //Магма-шифрование
+                    trueScore = Convert.ToBase64String(Magma_Encrypt(trueScore));
+                    //Запись данных
+                    Preferences.Set("score", trueScore);
+                    break;
+                default: break;
+            }
+        }
+
+        //Ключ ГОСТ
+        byte[] Magma_key = Encoding.ASCII.GetBytes("7c9e6679742540de944be07fc1f90ae7");
+        private byte[] MagmaEncryptedFile, MagmaDecryptedFile;
+        //Магма шифрование
+        public byte[] Magma_Encrypt(string inputvalue)
+        {
+            if (Magma_key != null)
             {
                 Converter converter = new Converter();
-                value = converter.ConvertScoreToText(value);
-                byte[] btFile = Encoding.Default.GetBytes(value);
-                E32 e32 = new E32(btFile, byteKey);
-                encrByteFile = e32.GetEncryptFile;
+                inputvalue = converter.ConvertScoreToText(inputvalue);
+                byte[] inputfile = Convert.FromBase64String(inputvalue);
+                MagmaEncryption ED = new MagmaEncryption(inputfile, Magma_key);
+                MagmaEncryptedFile = ED.GetEncryptFile;
             }
-            return encrByteFile;
+            return MagmaEncryptedFile;
         }
-        public byte[] Gost_Decrypt(byte[] value)
+        //Магма дешифрование
+        public byte[] Magma_Decrypt(byte[] inputvalue)
         {
-            if (byteKey != null)
+            if (Magma_key != null)
             {
-                D32 d32 = new D32(value, byteKey);
-                decrByteFile = d32.GetDecryptFile;
+                MagmaDecryption MD = new MagmaDecryption(inputvalue, Magma_key);
+                MagmaDecryptedFile = MD.GetDecryptFile;
             }
-            return decrByteFile;
+            return MagmaDecryptedFile;
         }
     }
 }

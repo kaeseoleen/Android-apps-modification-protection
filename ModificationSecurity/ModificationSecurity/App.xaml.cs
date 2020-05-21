@@ -1,10 +1,5 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SQLite;
-using System.IO;
-using System.Text;
-
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ModificationSecurity
 {
@@ -13,20 +8,20 @@ namespace ModificationSecurity
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage());            
         }
         MainActivity mainActivity = new MainActivity();
         protected override void OnStart()
         {
-            mainActivity.SQLite_Activity("open_app");
+            mainActivity.Data_Activity("open_app");
         }
         protected override void OnSleep()
         {
-            mainActivity.SQLite_Activity("close_app");
+            mainActivity.Data_Activity("close_app");
         }
         protected override void OnResume()
         {
-            mainActivity.SQLite_Activity("open_app");
+            mainActivity.Data_Activity("open_app");
         }
     }
 }
