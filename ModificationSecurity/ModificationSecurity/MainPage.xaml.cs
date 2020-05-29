@@ -7,24 +7,22 @@ namespace ModificationSecurity
     {
         MainActivity mainActivity = new MainActivity();
         XOR xor = new XOR();
-        public int tempScore;
+        public int N;
         public MainPage()
         {
-            InitializeComponent();
-            ScoreText.Text = mainActivity.Get_trueScore(); 
+            InitializeComponent();            
         }
-        private async void AddScoreButton_Click(object sender, EventArgs e)
+        //Добавление баллов 
+        private async void N_Add_Button_Click(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AdsPage());
-            //Добавление баллов 
-            string temp = mainActivity.Get_trueScore();
-            //XOR-Дешифрование 
-            tempScore = int.Parse(xor.DecryptXOR(temp));
-            tempScore += 1;
+            await Navigation.PushAsync(new AdsPage());            
+            //XOR-Дешифрование             
+            N = int.Parse(xor.X_Decrypt(mainActivity.Get_NScore()));
+            N += 1;
+            ScoreText.Text = N.ToString();
             //XOR-шифрование
-            mainActivity.Update_trueScore(xor.EncryptXOR(tempScore.ToString())); 
-            ScoreText.Text = tempScore.ToString();
-            tempScore = 0;
+            mainActivity.Update_NScore(xor.X_Encrypt(N.ToString()));             
+            N = 0;
         }   
     }
 }

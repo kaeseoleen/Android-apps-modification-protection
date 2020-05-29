@@ -8,7 +8,7 @@
         <StackLayout>
             <Label Text="Баллы:" />
             <Label x:Name="ScoreText"/>
-            <Button Text="Получить баллы" Clicked="AddScoreButton_Click"></Button>
+            <Button Text="Получить баллы" Clicked="N_Add_Button_Click"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

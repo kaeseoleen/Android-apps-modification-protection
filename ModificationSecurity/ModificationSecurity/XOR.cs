@@ -4,31 +4,31 @@ namespace ModificationSecurity
 {
     class XOR
     {
-        static byte[] XOR_key;
+        static byte[] X_key;
         //Генерация ключа, шифрование
-        public string EncryptXOR(string value)
+        public string X_Encrypt(string value)
         {
-            XOR_key = Guid.NewGuid().ToByteArray();            
-            return Convert.ToBase64String(Encode(Encoding.Default.GetBytes(value), XOR_key));
+            X_key = Guid.NewGuid().ToByteArray();            
+            return Convert.ToBase64String(Encode(Encoding.Default.GetBytes(value), X_key));
         }
         //Дешифрование
-        public  string DecryptXOR(string value)
+        public  string X_Decrypt(string value)
         {
-            return Encoding.Default.GetString(Encode(Convert.FromBase64String(value), XOR_key));
+            return Encoding.Default.GetString(Encode(Convert.FromBase64String(value), X_key));
         }
-        private static byte[] Encode(byte[] inputbytes, byte[] xor_Key)
+        private static byte[] Encode(byte[] bytes, byte[] key)
         {
             var j = 0;
-            for (var i = 0; i < inputbytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
-                inputbytes[i] ^= xor_Key[j];
+                bytes[i] ^= key[j];
 
-                if (++j == xor_Key.Length)
+                if (++j == key.Length)
                 {
                     j = 0;
                 }
             }
-            return inputbytes;
+            return bytes;
         }
     }
 }

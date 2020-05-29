@@ -34,7 +34,7 @@ namespace ModificationSecurity
             }
             return data;
         }
-        public string ConvertScoreToText(string Value)
+        public string N_toText(string Value)
         {
             while (Value.Length < 32)
             {

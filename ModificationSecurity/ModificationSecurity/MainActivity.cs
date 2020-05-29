@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using Xamarin.Essentials;
 
@@ -8,18 +9,23 @@ namespace ModificationSecurity
     {
         XOR xor = new XOR();
         //Строка для хранения защищаемого значения
-        private static string trueScore;
-        public string Get_trueScore()
+        private static string N_Score;
+        public string Get_NScore()
         {
-            return trueScore;
+            return N_Score;
         }
-        public void Update_trueScore(string value)
+        public void Update_NScore(string value)
         {
-            trueScore = value;
-        }
-        //Работа с локальным хранилищем
-        public void Data_Activity(string state)
+            N_Score = value;
+        }        
+        public void Preferences_Activity(string state)
         {
+            //Генерация ключа
+            using (SHA256 mySHA256 = SHA256.Create())
+            {
+                M_key = mySHA256.ComputeHash(Encoding.ASCII.GetBytes(DeviceModel));
+            }
+            //Работа с локальным хранилищем
             switch (state)
             {
                 case "open_app":                    
@@ -28,53 +34,55 @@ namespace ModificationSecurity
                         //Извлечение данных
                         string ClosedText = Preferences.Get("score", string.Empty);
                         //Магма-дешифрование
-                        trueScore = Convert.ToBase64String(Magma_Decrypt(Convert.FromBase64String(ClosedText)));
+                        Update_NScore(Convert.ToBase64String(M_Decrypt(Convert.FromBase64String(ClosedText))));
                     }     
                     else
                     {
-                        trueScore = "0";
+                        Update_NScore("0");
                     }
                     //XOR-шифрование
-                    trueScore = xor.EncryptXOR(trueScore);
+                    Update_NScore(xor.X_Encrypt(Get_NScore()));                                      
                     break;
 
                 case "close_app":
                     //XOR-дешифрование
-                    trueScore = xor.DecryptXOR(trueScore);
+                    Update_NScore(xor.X_Decrypt(Get_NScore()));
                     //Магма-шифрование
-                    trueScore = Convert.ToBase64String(Magma_Encrypt(trueScore));
+                    Update_NScore(Convert.ToBase64String(M_Encrypt(Get_NScore())));
                     //Запись данных
-                    Preferences.Set("score", trueScore);
+                    Preferences.Set("score", Get_NScore());
                     break;
                 default: break;
             }
         }
 
         //Ключ ГОСТ
-        byte[] Magma_key = Encoding.ASCII.GetBytes("7c9e6679742540de944be07fc1f90ae7");
-        private byte[] MagmaEncryptedFile, MagmaDecryptedFile;
+        string DeviceModel = DeviceInfo.Model;
+        byte[] M_key;
+        //byte[] M_key = Encoding.ASCII.GetBytes("7c9e6679742540de944be07fc1f90ae7");
+        private byte[] M_EncryptionFile, M_DecryptionFile;
         //Магма шифрование
-        public byte[] Magma_Encrypt(string inputvalue)
+        public byte[] M_Encrypt(string inputvalue)
         {
-            if (Magma_key != null)
+            if (M_key != null)
             {
                 Converter converter = new Converter();
-                inputvalue = converter.ConvertScoreToText(inputvalue);
+                inputvalue = converter.N_toText(inputvalue);
                 byte[] inputfile = Convert.FromBase64String(inputvalue);
-                MagmaEncryption ED = new MagmaEncryption(inputfile, Magma_key);
-                MagmaEncryptedFile = ED.GetEncryptFile;
+                M_Encryption ME = new M_Encryption(inputfile, M_key);
+                M_EncryptionFile = ME.GetEncryptFile;
             }
-            return MagmaEncryptedFile;
+            return M_EncryptionFile;
         }
         //Магма дешифрование
-        public byte[] Magma_Decrypt(byte[] inputvalue)
+        public byte[] M_Decrypt(byte[] inputvalue)
         {
-            if (Magma_key != null)
+            if (M_key != null)
             {
-                MagmaDecryption MD = new MagmaDecryption(inputvalue, Magma_key);
-                MagmaDecryptedFile = MD.GetDecryptFile;
+                M_Decryption MD = new M_Decryption(inputvalue, M_key);
+                M_DecryptionFile = MD.GetDecryptFile;
             }
-            return MagmaDecryptedFile;
+            return M_DecryptionFile;
         }
     }
 }

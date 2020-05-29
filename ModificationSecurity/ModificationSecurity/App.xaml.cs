@@ -13,15 +13,15 @@ namespace ModificationSecurity
         MainActivity mainActivity = new MainActivity();
         protected override void OnStart()
         {
-            mainActivity.Data_Activity("open_app");
+            mainActivity.Preferences_Activity("open_app");
         }
         protected override void OnSleep()
         {
-            mainActivity.Data_Activity("close_app");
+            mainActivity.Preferences_Activity("close_app");
         }
         protected override void OnResume()
         {
-            mainActivity.Data_Activity("open_app");
+            mainActivity.Preferences_Activity("open_app");
         }
     }
 }
