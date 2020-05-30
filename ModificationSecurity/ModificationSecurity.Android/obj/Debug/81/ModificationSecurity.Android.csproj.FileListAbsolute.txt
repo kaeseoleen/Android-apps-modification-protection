@@ -209,6 +209,4 @@ C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSe
 C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity.Android\obj\Debug\81\android\assets\Xamarin.Forms.Core.pdb
 C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity.Android\obj\Debug\81\android\assets\Xamarin.Forms.Platform.Android.pdb
 C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity.Android\obj\Debug\81\android\assets\Xamarin.Forms.Xaml.pdb
-C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity\bin\Debug\netstandard2.0\ModificationSecurity.dll
-C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity.Android\bin\Debug\ModificationSecurity.dll.mdb
 C:\Users\kaese\OneDrive\ModificationSecurity\ModificationSecurity\ModificationSecurity.Android\obj\Debug\81\linksrc\ModificationSecurity.dll.mdb
