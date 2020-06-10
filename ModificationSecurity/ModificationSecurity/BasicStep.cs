@@ -18,7 +18,6 @@ namespace ModificationSecurity
         {
             return (uint)((K + L) % (Convert.ToUInt64(Math.Pow(2, 32))));
         }
-        //Подстановка блоков
         private uint Replacement(uint S)
         {
             uint newS, S0, S1, S2, S3, S4, S5, S6, S7;
@@ -46,7 +45,6 @@ namespace ModificationSecurity
 
             return newS;
         }
-        //Сдвиг
         private uint Shifting(uint S)
         {
             return (uint)(S << 11) | (S >> 21);

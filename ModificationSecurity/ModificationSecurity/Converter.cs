@@ -16,6 +16,20 @@ namespace ModificationSecurity
             }
             return encrByteFile;
         }
+        internal byte[] ConvertToByte(uint[] fl)
+        {
+            byte[] temp = new byte[4];
+            byte[] encrByteFile = new byte[fl.Length * 4];
+
+            for (int i = 0; i < fl.Length; i++)
+            {
+                temp = BitConverter.GetBytes(fl[i]);
+
+                for (int j = 0; j < temp.Length; j++)
+                    encrByteFile[j + i * 4] = temp[j];
+            }
+            return encrByteFile;
+        }
         public uint[] GetUIntKeyArray(byte[] byteKey)
         {
             uint[] key = new uint[8];
@@ -23,6 +37,17 @@ namespace ModificationSecurity
             {
                 key[i] = BitConverter.ToUInt32(byteKey, i * 4);
             }
+            return key;
+        }
+        internal uint[] G_GetUIntKeyArray(byte[] byteKey)
+        {
+            uint[] key = new uint[byteKey.Length / 4];
+
+            for (int i = 0; i < key.Length; i++)
+            {
+                key[i] = BitConverter.ToUInt32(byteKey, i * 4);
+            }
+
             return key;
         }
         public ulong[] GetULongDataArray(byte[] byteData)
